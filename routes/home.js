@@ -10,7 +10,7 @@ const { log } = require('console');
 
 router.get('/trips', (req, res) => {
     const { departure, arrival, date } = req.body;
-    const formattedDate = moment(date, 'DDMMYYYY');
+    const formattedDate = moment.utc(date, 'DDMMYYYY');
     const startOfDay = formattedDate.startOf('day').toDate();
     const endOfDay = formattedDate.endOf('day').toDate();
     Trip.find({

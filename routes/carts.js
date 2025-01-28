@@ -10,12 +10,16 @@ const Cart = require('../models/carts');
 router.post('/add/:id', (req,res) =>{
 
     const{ id }= req.params.id
-    Trip.findOne({ id }).then(data =>{console.log(data)
+    Trip.findOne({ id })
+    // .populate('trips')
+    .then(data =>{console.log(data)
+        
         const newcartTrip = new Cart({
-            data
+            trip: data
         })
         
         newcartTrip.save()
+        res.json({ result: true, trips: newcartTrip })
     })
     })
 
