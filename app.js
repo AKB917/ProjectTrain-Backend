@@ -6,6 +6,7 @@ var logger = require('morgan');
 require('dotenv').config();
 var indexRouter = require('./routes/index');
 var homeRouter = require('./routes/home');
+var cartsRouter = require('./routes/carts')
 var app = express();
 const cors = require('cors');
 app.use(cors());
@@ -20,5 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/home', homeRouter);
+app.use('/carts' , cartsRouter)
 
 module.exports = app;
