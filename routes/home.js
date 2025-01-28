@@ -41,6 +41,6 @@ router.get('/trips', (req, res) => {
       res.json({ result: false, error: "No trip found" });
     }
   });
-});
+
 
 module.exports = router;
