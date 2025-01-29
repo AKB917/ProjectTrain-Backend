@@ -5,11 +5,12 @@ require('../models/connection');
 const moment = require("moment");
 moment.locale('fr');
 const Trip = require('../models/trips');
-const Booking = require("../models/bookings")
+const Booking = require("../models/bookings");
+const Cart = require('../models/carts');
 
 
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// Route pour afficher le panier
+// Route pour afficher le booking
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 router.get('/', (req,res) =>{
     Cart.find()
@@ -36,5 +37,26 @@ router.get('/', (req,res) =>{
     
 })
 })
+
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// Route pour ajouter un trajet dans du panier vers le booking
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+router.post('/add/:id', (req,res) =>{
+
+    console.log("un truc",req.params)
+    console.log("un truc",req.params.id)
+        const id = req.params.id
+        console.log("deux truc",id)
+        Cart.findById(id) 
+        .then(data =>{console.log("data=",data)
+            const newcartTrip = new Cart({
+                trip: data
+            })
+        
+            
+            newcartTrip.save()
+            res.json({ result: true, trips: newcartTrip })
+        })
+        })
 
 module.exports = router;
