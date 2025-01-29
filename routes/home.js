@@ -60,12 +60,12 @@ router.get('/tripsh', (req, res) => {
         
     }else {
         const datehour = data.map((trip) => { 
+            console.log(trip.date)
+            console.log(moment(new Date(trip.date)))
             return {
                 ...trip.toObject(),
-                time: moment(trip.date).format('HH:mm') // Format HH:MM de date
-            }   
-                
-            
+                time: moment.utc(new Date(trip.date)).format('HH:mm') // Format HH:MM de date
+            }               
         });
         
         res.json({ result: true, trips: datehour });
@@ -76,7 +76,7 @@ router.get('/tripsh', (req, res) => {
 });
 
 router.get('/tripshh', (req, res) => {
-    const { departure, arrival, date } = req.query;
+    const { departure, arrival, date } = req.body;
     const formattedDate = moment(date, 'DDMMYYYY');
     const startOfDay = formattedDate.startOf('day').toDate();
     const endOfDay = formattedDate.endOf('day').toDate();
@@ -95,7 +95,7 @@ else{
         
         
         
-                res.json({result : true ,  Cart : dathour})
+                res.json({result : true ,  Trip : dathour})
             })
         
         
