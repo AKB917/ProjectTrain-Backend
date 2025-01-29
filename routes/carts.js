@@ -9,7 +9,8 @@ const Cart = require('../models/carts');
 
 
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// Route pour ajouter un trajet dans le panier
+// Route pour ajouter un trajet dans le panier "BOOK" depuis la liste
+// dans home
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 router.post('/add/:id', (req,res) =>{
 
@@ -46,13 +47,13 @@ router.post('/add/:id', (req,res) =>{
 router.get('/', (req,res) =>{
     Cart.find()
     .populate('trip')
-    .then(data => {
+    .then(data => { let total =0
         const datehour = data.map((trip) => { 
                 return {
                     ...trip.toObject(),
                     date: moment(trip.date).utc().format('HH:mm') // Format complet
                 };
-            });
+            });total += trips[i].price; // Ajoute le prix au total 
         res.json({result : true ,  Cart : datehour})
     })
     
