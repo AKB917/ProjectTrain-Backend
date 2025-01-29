@@ -43,9 +43,9 @@ router.get('/', async (req, res) => {
                 id: trip.id,
                 departure: trip.trip.departure,
                 arrival: trip.trip.arrival,
-                time: "departure at "+ time, // Ajoute l'heure formatée
+                time:  time, // Ajoute l'heure formatée
                 price: trip.trip.price,
-                depart :"departure in " + depart,
+                depart :"departure at "+ time,
             };
         }).filter(trip => trip !== null); // Supprime les valeurs null (au cas où certaines trips sont invalides)
 
