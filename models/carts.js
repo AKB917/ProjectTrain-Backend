@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const cartSchema = mongoose.Schema({
+const cartSchema = new mongoose.Schema({
     trip: { type : mongoose.Schema.Types.ObjectId, ref :'trips'}
 });
 

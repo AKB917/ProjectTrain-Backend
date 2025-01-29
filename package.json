@@ -12,6 +12,7 @@
     "dotenv": "^16.4.7",
     "express": "~4.16.1",
     "moment": "^2.30.1",
+    "moment-timezone": "^0.5.47",
     "mongoose": "^8.9.5",
     "morgan": "~1.9.1",
     "node": "^18.20.6"
