@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
             let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
 
             totalPrice += trip.trip.price || 0; // Ajoute le prix au total, évite les valeurs undefined
-            const depart = moment(trip.trip.date).fromNow(true)
+            const depart = moment(trip.trip.date).fromNow(true) //Ajout du temps restant avant le départ
             return {
                 id: trip.id,
                 departure: trip.trip.departure,
