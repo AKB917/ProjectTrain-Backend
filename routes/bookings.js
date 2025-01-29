@@ -31,18 +31,20 @@ router.get('/', async (req, res) => {
             if (!trip.trip || !trip.trip.date) {
                 return null; 
             }
-
-            let dateObj = new Date(trip.trip.date);console.log((new Date(trip.trip.date)-(new Date()))/1000/3600)
+            
+            let dateObj = new Date(trip.trip.date);
+            console.log(moment(trip.trip.date).fromNow());
             let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
 
             totalPrice += trip.trip.price || 0; // Ajoute le prix au total, évite les valeurs undefined
-            
+            const depart = moment(trip.trip.date).fromNow(true)
             return {
                 id: trip.id,
                 departure: trip.trip.departure,
                 arrival: trip.trip.arrival,
                 time: time, // Ajoute l'heure formatée
-                price: trip.trip.price
+                price: trip.trip.price,
+                depart :"départ dans " + depart,
             };
         }).filter(trip => trip !== null); // Supprime les valeurs null (au cas où certaines trips sont invalides)
 
