@@ -13,30 +13,29 @@ const Cart = require('../models/carts');
 // Route pour afficher le booking
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 router.get('/', (req,res) =>{
-    Booking.find()
-    .populate('trip')
-    .then(data => {
+    const data = Booking.find().populate('trip')
+    .then(data => {console.log(data)
         let totalPrice = 0;
         
-        const formattedTrips = data.map(trip => {
-            let dateObj = new Date(trip.date);
-            let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
+        // const formattedTrips = data.map(trip => {
+        //     let dateObj = new Date(trip.date);
+        //     let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
 
-            totalPrice += trip.trip.price; // Ajoute le prix au total
+        //     totalPrice += trip.trip.price; // Ajoute le prix au total
             
-            return {
-                departure: trip.trip.departure,
-                arrival: trip.trip.arrival,
-                time: time, // Ajoute l'heure formatée
-                price: trip.trip.price
-            };
+        //     return {
+        //         departure: trip.trip.departure,
+        //         arrival: trip.trip.arrival,
+        //         time: time, // Ajoute l'heure formatée
+        //         price: trip.trip.price
+            // };
         });
 
-        res.json({ result: true, trips: formattedTrips, totalPrice: totalPrice });
+        res.json({ result: true, trips: data });
     
     
 })
-})
+// })
 
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Route pour ajouter un trajet dans du panier vers le booking

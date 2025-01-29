@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
             
             return {
                 id: trip.trip.id,
-                departure: trip.departure,
+                departure: trip.trip.departure,
                 arrival: trip.trip.arrival,
                 time: time, // Ajoute l'heure formatée
                 price: trip.trip.price
