@@ -41,21 +41,19 @@ router.get('/', (req,res) =>{
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Route pour ajouter un trajet dans du panier vers le booking
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-router.post('/add/:id', (req,res) =>{
+router.post('/add', (req,res) =>{
 
-
+  
         const id = req.params.id
-        console.log("ccccc",data)
-        Cart.findById(id)
+       
+        Cart.find() 
         .then(data =>{
-            const newbookingTrip = new Booking({
-                trip: Cart.data
-            })
-            newbookingTrip.save()
-            res.json({ result: true, trips: newbookingTrip })
+            for (const trip of data) {
+                const newBooking = new Booking({ trip: trip.trip })
+                newBooking.save()
+            }
         })
-        
-
+        .then(() => Cart.deleteMany().then(() =>res.json({ result: true }) ))
         })
 
 module.exports = router;

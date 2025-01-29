@@ -62,10 +62,10 @@ router.get('/', async (req, res) => {
 
         let totalPrice = 0;
 
-        // Formatage des données
+        
         const formattedTrips = data.map(trip => {
             if (!trip.trip || !trip.trip.date) {
-                return null; // Évite les erreurs si trip ou date est undefined
+                return null; 
             }
 
             let dateObj = new Date(trip.trip.date);
