@@ -37,6 +37,7 @@ router.get('/', async (req, res) => {
             let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
 
             totalPrice += trip.trip.price || 0; // Ajoute le prix au total, évite les valeurs undefined
+            
             const depart = moment(trip.trip.date).fromNow(true) //Ajout du temps restant avant le départ
             return {
                 id: trip.id,
@@ -44,7 +45,7 @@ router.get('/', async (req, res) => {
                 arrival: trip.trip.arrival,
                 time: time, // Ajoute l'heure formatée
                 price: trip.trip.price,
-                depart :"départ dans " + depart,
+                depart :"departure in " + depart,
             };
         }).filter(trip => trip !== null); // Supprime les valeurs null (au cas où certaines trips sont invalides)
 
