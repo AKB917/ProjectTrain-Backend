@@ -13,13 +13,13 @@ const Cart = require('../models/carts');
 // Route pour afficher le booking
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 router.get('/', (req,res) =>{
-    Cart.find()
+    Booking.find()
     .populate('trip')
-    .then(data => {console.log(data)
+    .then(data => {
         let totalPrice = 0;
         
         const formattedTrips = data.map(trip => {
-            let dateObj = new Date(trip.trip.date);
+            let dateObj = new Date(trip.date);
             let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
 
             totalPrice += trip.trip.price; // Ajoute le prix au total
@@ -43,20 +43,19 @@ router.get('/', (req,res) =>{
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 router.post('/add/:id', (req,res) =>{
 
-    console.log("un truc",req.params)
-    console.log("un truc",req.params.id)
+
         const id = req.params.id
-        console.log("deux truc",id)
-        Cart.findById(id) 
-        .then(data =>{console.log("data=",data)
-            const newcartTrip = new Cart({
-                trip: data
+        console.log("ccccc",data)
+        Cart.findById(id)
+        .then(data =>{
+            const newbookingTrip = new Booking({
+                trip: Cart.data
             })
-        
-            
-            newcartTrip.save()
-            res.json({ result: true, trips: newcartTrip })
+            newbookingTrip.save()
+            res.json({ result: true, trips: newbookingTrip })
         })
+        
+
         })
 
 module.exports = router;
