@@ -74,6 +74,7 @@ router.get('/', async (req, res) => {
             totalPrice += trip.trip.price || 0; // Ajoute le prix au total, évite les valeurs undefined
             
             return {
+                id: trip.id,
                 departure: trip.trip.departure,
                 arrival: trip.trip.arrival,
                 time: time, // Ajoute l'heure formatée
