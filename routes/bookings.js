@@ -12,30 +12,47 @@ const Cart = require('../models/carts');
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Route pour afficher le booking
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-router.get('/', (req,res) =>{
-    const data = Booking.find().populate('trip')
-    .then(data => {console.log(data)
-        let totalPrice = 0;
+router.get('/', async (req, res) => {
+    try {
+        // Récupérer tous les éléments du panier avec les trips associés
+        const data = await Booking.find().populate('trip');
+
+        if (!data || data.length === 0) {
+            return res.json({ result: false, error: "No trips found in Booking" });
+        }
+
         
-        // const formattedTrips = data.map(trip => {
-        //     let dateObj = new Date(trip.date);
-        //     let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
+        
 
-        //     totalPrice += trip.trip.price; // Ajoute le prix au total
+        let totalPrice = 0;
+
+        
+        const formattedTrips = data.map(trip => {
+            if (!trip.trip || !trip.trip.date) {
+                return null; 
+            }
+
+            let dateObj = new Date(trip.trip.date);console.log((new Date(trip.trip.date)-(new Date()))/1000/3600)
+            let time = dateObj.toISOString().slice(11, 16); // Extrait HH:MM
+
+            totalPrice += trip.trip.price || 0; // Ajoute le prix au total, évite les valeurs undefined
             
-        //     return {
-        //         departure: trip.trip.departure,
-        //         arrival: trip.trip.arrival,
-        //         time: time, // Ajoute l'heure formatée
-        //         price: trip.trip.price
-            // };
-        });
+            return {
+                id: trip.id,
+                departure: trip.trip.departure,
+                arrival: trip.trip.arrival,
+                time: time, // Ajoute l'heure formatée
+                price: trip.trip.price
+            };
+        }).filter(trip => trip !== null); // Supprime les valeurs null (au cas où certaines trips sont invalides)
 
-        res.json({ result: true, trips: data });
-    
-    
-})
-// })
+        return res.json({ result: true, trips: formattedTrips, totalPrice: totalPrice });
+
+    } catch (error) {
+        console.error("Error:", error);
+        return res.json({ result: false, error: error.message });
+    }
+});
 
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Route pour ajouter un trajet dans du panier vers le booking

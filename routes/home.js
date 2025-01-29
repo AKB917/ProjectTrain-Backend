@@ -31,8 +31,8 @@ router.get('/trips', (req, res) => {
         
     }else { // Envois des données et ajout d'une clé time pour avoir l'heure du train
         const datehour = data.map((trip) => { 
-            console.log(trip.date)
-            console.log(moment(new Date(trip.date)))
+            // console.log(trip.date)
+            // console.log(moment(new Date(trip.date)))
             return {
                 ...trip.toObject(),
                 time: moment.utc(new Date(trip.date)).format('HH:mm') // Format HH:MM de date
